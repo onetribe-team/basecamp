@@ -26,7 +26,7 @@ module Basecamp
         #
         # Returns nothing.
         def configure(connection)
-          connection.request :authorization, 'Bearer', @token
+          connection.headers['Authorization'] = "Bearer #{@token}"
         end
       end
     end

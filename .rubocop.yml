@@ -5,5 +5,11 @@ AllCops:
   TargetRubyVersion: 3.1
   NewCops: enable
 
+RSpec/FilePath:
+  CustomTransform: {'OAuth2': 'oauth2'}
+
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+
 Layout/LineLength:
   Max: 120

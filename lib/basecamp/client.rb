@@ -19,15 +19,6 @@ module Basecamp
   #     client.authentication :oauth2, bearer_token: '...'
   #   end
   #
-  #   # OAuth2 with a plain refresh token and client credentials
-  #   Basecamp::Client.new do |client|
-  #     client.authentication :oauth2,
-  #                           refresh_token: '...',
-  #                           client_id: '...',
-  #                           client_secret: '...',
-  #                           redirect_uri: '...'
-  #   end
-  #
   #   # OAuth2 with an ::OAuth2::AccessToken object
   #   Basecamp::Client.new do |client|
   #     client.authentication :oauth2, my_oauth2_access_token_object

@@ -116,8 +116,6 @@ module Basecamp
         case value
         when ::OAuth2::AccessToken
           from_access_token(value)
-        when ->(v) { v.is_a?(Hash) && v[:refresh_token] }
-          from_refresh_token(value)
         when ->(v) { v.is_a?(Hash) && v[:bearer_token] }
           from_bearer_token(value[:bearer_token])
         else
@@ -135,27 +133,6 @@ module Basecamp
       def from_access_token(access_token)
         Authentication::OAuth2::AccessTokenAuthentication
           .new(access_token)
-      end
-
-      # Internal: Configures an OAuth2 AccessTokenAuthentication strategy.
-      #
-      # hash - The configuration hash:
-      #        :refresh_token - [String] the OAuth2 refresh token
-      #        :client_id     - [String] the OAuth2 client id
-      #        :client_secret - [String] the OAuth2 client secret
-      #        :redirect_uri  - [String] the OAuth2 redirect URI
-      #
-      # Returns a [Authentication::OAuth2::AccessTokenAuthentication] strategy.
-      def from_refresh_token(hash)
-        refresh_token, client_id, client_secret, redirect_uri =
-          requiring(hash, :refresh_token, :client_id,
-            :client_secret, :redirect_uri)
-
-        Authentication::OAuth2::AccessTokenAuthentication
-          .from_refresh_token(refresh_token,
-            client_id: client_id,
-            client_secret: client_secret,
-            redirect_uri: redirect_uri)
       end
 
       # Internal: Configures an OAuth2 BearerTokenAuthentication strategy.
