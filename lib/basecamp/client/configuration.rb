@@ -4,12 +4,12 @@ require 'oauth2'
 
 module Basecamp
   class Client
-    # Internal: Represents a configuration DSL for an Asana::Client.
+    # Internal: Represents a configuration DSL for an Basecamp::Client.
     #
     # Examples
     #
     #   config = Configuration.new
-    #   config.authentication :access_token, 'personal_access_token'
+    #   config.authentication :oauth, bearer_token: 'token'
     #   config.adapter :typhoeus
     #   config.configure_faraday { |conn| conn.use MyMiddleware }
     #   config.to_h
@@ -36,7 +36,6 @@ module Basecamp
         auth =
           case type
           when :oauth2 then oauth2(value)
-          when :access_token then from_bearer_token(value)
           else error "unsupported authentication type #{type}"
           end
         @configuration[:authentication] = auth
@@ -49,6 +48,13 @@ module Basecamp
       # Returns nothing.
       def account_id(value)
         @configuration[:account_id] = value
+      end
+
+      # Public: Sets an application info to be passed to Basecamp in User-Agent header.
+      #
+      # Returns nothing.
+      def application_info(value)
+        @configuration[:application_info] = value
       end
 
       # Public: Sets a custom network adapter for Faraday.
@@ -99,8 +105,8 @@ module Basecamp
       # value - [::OAuth::AccessToken, String] the value to configure the
       #         strategy from.
       #
-      # Returns [Asana::Authentication::OAuth2::AccessTokenAuthentication,
-      #          Asana::Authentication::OAuth2::BearerTokenAuthentication]
+      # Returns [Basecamp::Authentication::OAuth2::AccessTokenAuthentication,
+      #          Basecamp::Authentication::OAuth2::BearerTokenAuthentication]
       #         the OAuth2 authentication strategy.
       #
       # Raises ArgumentError if the OAuth2 configuration arguments are invalid.

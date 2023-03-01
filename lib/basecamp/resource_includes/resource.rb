@@ -63,7 +63,7 @@ module Basecamp
 
       private
 
-      # Internal: The Asana::Client instance.
+      # Internal: The Basecamp::Client instance.
       def client
         @_client
       end

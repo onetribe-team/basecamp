@@ -4,7 +4,7 @@ require_relative 'response_helper'
 
 module Basecamp
   module Resources
-    # Public: Represents a paginated collection of Asana resources.
+    # Public: Represents a paginated collection of Basecamp resources.
     class Collection
       include Enumerable
       include ResponseHelper
@@ -24,7 +24,8 @@ module Basecamp
         client: required('client'))
         @elements = elements.map { |elem| type.new(elem, client: client) }
         @type = type
-        @next_page_data = extra['next_page']
+        @next_page_data = extra[:next_page_data]
+        @total_count = extra[:total_count]
         @client = client
       end
 
@@ -49,15 +50,19 @@ module Basecamp
       end
       alias_method :length, :size
 
+      # Public: Returns the total number of items in the collection based in Basecamp X-Total-Count header.
+      attr_reader :total_count
+
       # Public: Returns a String representation of the collection.
       def to_s
-        "#<Basecamp::Collection<#{@type}> " \
+        "#<Basecamp::Collection<#{@type}> " +
+          (@total_count ? "(#{@total_count} total) " : '') +
           "[#{@elements.map(&:inspect).join(", ")}" +
           (@next_page_data ? ', ...' : '') + ']>'
       end
       alias_method :inspect, :to_s
 
-      # Public: Returns a new Asana::Resources::Collection with the next page
+      # Public: Returns a new Basecamp::Resources::Collection with the next page
       # or nil if there are no more pages. Caches the result.
       def next_page
         if defined?(@next_page)

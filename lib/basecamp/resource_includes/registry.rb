@@ -10,7 +10,7 @@ module Basecamp
     #
     # Examples
     #
-    #   class Unicorn < Asana::Resources::Resource
+    #   class Unicorn < Basecamp::Resources::Resource
     #     path '/unicorns'
     #   end
     #
@@ -32,7 +32,7 @@ module Basecamp
         #
         # singular_name - [#to_s] the name of the resource, e.g :unicorn.
         #
-        # Returns the resource class or {Asana::Resources::Resource}.
+        # Returns the resource class or {Basecamp::Resources::Resource}.
         def lookup(singular_name)
           resources.detect do |klass|
             klass.singular_name.to_s == singular_name.to_s
@@ -43,7 +43,7 @@ module Basecamp
         #
         # plural_name - [#to_s] the plural name of the resource, e.g :unicorns.
         #
-        # Returns the resource class or {Asana::Resources::Resource}.
+        # Returns the resource class or {Basecamp::Resources::Resource}.
         def lookup_many(plural_name)
           resources.detect do |klass|
             klass.plural_name.to_s == plural_name.to_s

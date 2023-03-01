@@ -10,11 +10,11 @@ module Basecamp
         # client credentials, by refreshing into a new one.
         #
         # refresh_token - [String] a refresh token
-        # client_id     - [String] the client id of the registered Asana API
+        # client_id     - [String] the client id of the registered Basecamp API
         #                 Application.
-        # client_secret - [String] the client secret of the registered Asana API
+        # client_secret - [String] the client secret of the registered Basecamp API
         #                 Application.
-        # redirect_uri  - [String] the redirect uri of the registered Asana API
+        # redirect_uri  - [String] the redirect uri of the registered Basecamp API
         #                 Application.
         #
         # Returns an [AccessTokenAuthentication] instance with a refreshed

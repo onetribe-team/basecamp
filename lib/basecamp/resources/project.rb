@@ -11,11 +11,9 @@ module Basecamp
 
         # Returns the compact records for all workspaces visible to the authorized user.
         #
-        # per_page - [Integer] the number of records to fetch per page.
         # options - [Hash] the request I/O options.
-        def find_all(client, per_page: 20, options: {})
-          params = {limit: per_page}.reject { |_, v| v.nil? || Array(v).empty? }
-          Collection.new(parse(client.get('/projects', params: params, options: options)), type: self, client: client)
+        def find_all(client, options: {})
+          Collection.new(parse(client.get('/projects', options: options)), type: self, client: client)
         end
       end
     end

@@ -2,7 +2,7 @@
 
 module Basecamp
   class HttpClient
-    # Internal: Represents a response from the Asana API.
+    # Internal: Represents a response from the Basecamp API.
     class Response
       # Public:
       # Returns a [Faraday::Env] object for debugging.

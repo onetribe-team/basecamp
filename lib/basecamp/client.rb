@@ -78,8 +78,8 @@ module Basecamp
       @http_client =
         HttpClient.new(authentication:            config.fetch(:authentication),
                        account_id:                config.fetch(:account_id),
+                       application_info:          config[:application_info],
                        adapter:                   config[:faraday_adapter],
-                       user_agent:                config[:user_agent],
                        debug_mode:                config[:debug_mode],
                        default_headers:           config[:default_headers],
           &config[:faraday_configuration])

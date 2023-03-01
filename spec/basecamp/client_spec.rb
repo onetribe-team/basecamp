@@ -6,8 +6,9 @@ RSpec.describe Basecamp::Client do
   let(:api) { StubAPI.new(account_id: 999999999) }
   let(:client) do
     described_class.new do |c|
-      c.authentication :access_token, 'foo'
+      c.authentication :oauth2, bearer_token: 'foo'
       c.account_id 999999999
+      c.application_info 'Basecamp Client'
       c.faraday_adapter api.adapter
     end
   end
@@ -22,7 +23,7 @@ RSpec.describe Basecamp::Client do
     end
 
     specify '#post' do
-      api.on(:post, '/tags', {name: 'work'}) do |response|
+      api.on(:post, '/tags', body: {name: 'work'}) do |response|
         response.body = {foo: 'bar'}
       end
 
@@ -31,7 +32,7 @@ RSpec.describe Basecamp::Client do
     end
 
     specify '#put' do
-      api.on(:put, '/tags/1', {name: 'work'}) do |response|
+      api.on(:put, '/tags/1', body: {name: 'work'}) do |response|
         response.body = {foo: 'bar'}
       end
 

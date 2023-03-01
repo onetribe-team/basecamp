@@ -8,6 +8,9 @@ module Basecamp
         data = response.body
         extra = {}
 
+        total_count = response.headers['X-Total-Count']
+        extra[:total_count] = total_count.to_i if total_count
+
         [data, extra]
       end
     end

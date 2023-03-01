@@ -64,8 +64,8 @@ class StubAPI
   #     ...
   #   }
   #
-  def on(method, resource_uri, body = nil)
-    @stubs.send(method, *parse_args(method, resource_uri, body)) do |env|
+  def on(method, resource_uri, params: {}, body: nil)
+    @stubs.send(method, *parse_args(method, resource_uri, params, body)) do |env|
       if body.is_a?(Proc) && !body.call(env.body)
         raise "Stubbed #{method.upcase} #{resource_uri} did not fulfill the " \
           'argument validation block'
@@ -74,8 +74,15 @@ class StubAPI
     end
   end
 
-  def parse_args(method, resource_uri, body)
-    [base_uri_for_account + resource_uri + '.json'].tap do |as|
+  def parse_args(method, resource_uri, params, body)
+    uri =
+      URI(base_uri_for_account).tap do |uri|
+        uri.path = uri.path + resource_uri + '.json'
+        uri.query = URI.encode_www_form(params)
+      end
+
+    [uri].tap do |as|
+      puts as.inspect
       if [:post, :put, :patch].include?(method) && !body.is_a?(Proc)
         as.push JSON.dump(body)
       end
