@@ -1,6 +1,7 @@
 # Basecamp
 
 [![RSpec](https://github.com/onetribe-team/basecamp/actions/workflows/rspec.yml/badge.svg)](https://github.com/onetribe-team/basecamp/actions/workflows/rspec.yml)
+[![Lint Code](https://github.com/onetribe-team/basecamp/actions/workflows/lint.yml/badge.svg)](https://github.com/onetribe-team/basecamp/actions/workflows/lint.yml)
 
 TODO: Delete this and the text below, and describe your gem
 
