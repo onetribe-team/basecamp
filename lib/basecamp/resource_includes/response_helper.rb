@@ -5,11 +5,9 @@ module Basecamp
     # Internal: A helper to make response body parsing easier.
     module ResponseHelper
       def parse(response)
-        data =
-          response.body.fetch('data') do
-            raise("Unexpected response body: #{response.body}")
-          end
-        extra = response.body.except('data')
+        data = response.body
+        extra = {}
+
         [data, extra]
       end
     end

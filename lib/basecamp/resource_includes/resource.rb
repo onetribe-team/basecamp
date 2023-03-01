@@ -11,6 +11,10 @@ module Basecamp
       include ResponseHelper
       extend ResponseHelper
 
+      def self.inherited(base)
+        Registry.register(base)
+      end
+
       def initialize(data, client: required('client'))
         @_client = client
         @_data = data
@@ -53,7 +57,7 @@ module Basecamp
 
       def to_s
         attrs = to_h.map { |k, _| "#{k}: #{public_send(k).inspect}" }.join(', ')
-        "#<Asana::#{self.class.name.split("::").last} #{attrs}>"
+        "#<Basecamp::#{self.class.name.split("::").last} #{attrs}>"
       end
       alias_method :inspect, :to_s
 

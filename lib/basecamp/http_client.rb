@@ -15,7 +15,8 @@ module Basecamp
 
     # Public: Initializes an HttpClient to make requests to the Asana API.
     #
-    # authentication - [Asana::Authentication] An authentication strategy.
+    # authentication - [Basecamp::Authentication] An authentication strategy.
+    # account_id     - [Integer] Your Basecamp account ID.
     # adapter        - [Symbol, Proc] A Faraday adapter, eiter a Symbol for
     #                  registered adapters or a Proc taking a builder for a
     #                  custom one. Defaults to Faraday.default_adapter.
@@ -23,12 +24,14 @@ module Basecamp
     # config         - [Proc] An optional block that yields the Faraday builder
     #                  object for customization.
     def initialize(authentication: required('authentication'),
+      account_id: required('account_id'),
       adapter: nil,
       user_agent: nil,
       debug_mode: false,
       default_headers: nil,
       &config)
       @authentication = authentication
+      @account_id = account_id
       @adapter = adapter || Faraday.default_adapter
       @environment_info = EnvironmentInfo.new(user_agent)
       @debug_mode = debug_mode
@@ -72,7 +75,7 @@ module Basecamp
           end
         end
       options.merge(opts)
-      params = {data: body}.merge(options.empty? ? {} : {options: options})
+      params = body.merge(options.empty? ? {} : {options: options})
       perform_request(:put, resource_uri, params, options[:headers])
     end
 
@@ -95,7 +98,7 @@ module Basecamp
           end
         end
       options.merge(opts)
-      params = {data: body}.merge(options.empty? ? {} : {options: options})
+      params = body.merge(options.empty? ? {} : {options: options})
       if upload
         perform_request(:post, resource_uri, params.merge(file: upload), options[:headers]) do |c|
           c.request :multipart
@@ -139,7 +142,7 @@ module Basecamp
 
     def perform_request(method, resource_uri, body = {}, headers = {}, &request_config)
       handling_errors do
-        url = BASE_URI + resource_uri
+        url = base_uri_for_account(@account_id) + resource_uri + '.json'
         headers = (@default_headers || {}).merge(headers || {})
         log_request(method, url, body) if @debug_mode
         result = Response.new(connection(&request_config).public_send(method, url, body, headers))
@@ -176,6 +179,10 @@ module Basecamp
         method.to_s.upcase,
         url,
         body.inspect)
+    end
+
+    def base_uri_for_account(account_id)
+      BASE_URI + "/#{account_id}"
     end
   end
 end

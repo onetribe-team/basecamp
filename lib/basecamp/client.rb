@@ -77,6 +77,7 @@ module Basecamp
       config = Configuration.new.tap { |c| yield c }.to_h
       @http_client =
         HttpClient.new(authentication:            config.fetch(:authentication),
+                       account_id:                config.fetch(:account_id),
                        adapter:                   config[:faraday_adapter],
                        user_agent:                config[:user_agent],
                        debug_mode:                config[:debug_mode],

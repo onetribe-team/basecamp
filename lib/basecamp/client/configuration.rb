@@ -42,6 +42,15 @@ module Basecamp
         @configuration[:authentication] = auth
       end
 
+      # Public: Sets an account ID from Basecamp.
+      #
+      # value - [Interger] the ID.
+      #
+      # Returns nothing.
+      def account_id(value)
+        @configuration[:account_id] = value
+      end
+
       # Public: Sets a custom network adapter for Faraday.
       #
       # adapter - [Symbol, Proc] the adapter.
