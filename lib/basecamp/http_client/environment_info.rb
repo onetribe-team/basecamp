@@ -11,7 +11,7 @@ module Basecamp
         @application_info = application_info
 
         if @application_info.nil?
-          Warning.warn('Basecamp requires to identify your application in User-Agent header to be able to contact you in case of problems (https://github.com/basecamp/bc3-api/blob/master/README.md#identifying-your-application). Please provide application_infol to Basecamp::HttpClient.new')
+          Warning.warn('Basecamp requires to identify your application in User-Agent header to be able to contact you in case of problems (https://github.com/basecamp/bc3-api/blob/master/README.md#identifying-your-application). Please provide application_info to Basecamp::HttpClient.new')
         end
       end
 

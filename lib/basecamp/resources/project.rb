@@ -9,7 +9,16 @@ module Basecamp
           'projects'
         end
 
-        # Returns the compact records for all workspaces visible to the authorized user.
+        # Returns the full project record for a single project.
+        #
+        # id - [Id] unique identifier for the project or organization.
+        #
+        # options - [Hash] the request I/O options.
+        def find_by_id(client, id, options: {})
+          new(parse(client.get("/projects/#{id}", options: options)).first, client: client)
+        end
+
+        # Returns the compact records for all projects visible to the authorized user.
         #
         # options - [Hash] the request I/O options.
         def find_all(client, options: {})
